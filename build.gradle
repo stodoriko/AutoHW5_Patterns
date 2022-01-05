@@ -17,10 +17,10 @@ repositories {
 
 dependencies {
     implementation 'com.github.javafaker:javafaker:1.0.2'
-    implementation 'org.projectlombok:lombok:1.18.20'
-    testImplementation 'org.junit.jupiter:junit-jupiter:5.6.1'
+    implementation 'org.projectlombok:lombok:1.18.22'
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.8.2'
     // https://mvnrepository.com/artifact/com.codeborne/selenide
-    testImplementation 'com.codeborne:selenide:5.19.0'
+    testImplementation 'com.codeborne:selenide:6.1.2'
 
 }
 
