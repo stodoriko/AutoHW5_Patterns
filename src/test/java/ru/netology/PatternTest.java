@@ -39,7 +39,7 @@ public class PatternTest {
         // выбираем город
         $(By.xpath("//*[contains(@placeholder, 'Город')]")).setValue(city);
         // Дата - не ранее трёх дней с текущей даты
-        String date = LocalDate.now().plusDays(3).format(DateTimeFormatter.ofPattern("dd.MM.uuuu"));
+        String date = DataGenerator.Registration.setDate(3);
         $(By.xpath("//*[contains(@placeholder, 'Дата встречи')]")).doubleClick().sendKeys(Keys.BACK_SPACE);
         $(By.xpath("//*[contains(@placeholder, 'Дата встречи')]")).setValue(date);
         // Поле Фамилия и имя - разрешены только русские буквы, дефисы и пробелы
@@ -54,18 +54,19 @@ public class PatternTest {
         $(By.xpath("//div[contains(@class, 'notification_status_ok')]//button[contains(@class, 'notification__closer')]")).click();
 
 
-        $("[data-test-id=date] input[class=input__control]").sendKeys(Keys.LEFT_CONTROL + "a" + Keys.BACK_SPACE);
+        $(By.xpath("//*[contains(@placeholder, 'Город')]")).sendKeys(Keys.LEFT_CONTROL + "a" + Keys.BACK_SPACE);
         $(By.xpath("//*[contains(@placeholder, 'Город')]")).setValue(city);
-        String newDate = LocalDate.now().plusDays(4).format(DateTimeFormatter.ofPattern("dd.MM.uuuu"));
+        String newDate = DataGenerator.Registration.setDate(4);
         $(By.xpath("//*[contains(@placeholder, 'Дата встречи')]")).doubleClick().sendKeys(Keys.BACK_SPACE);
         $(By.xpath("//*[contains(@placeholder, 'Дата встречи')]")).setValue(newDate);
         $("span[data-test-id='phone'] input").sendKeys(Keys.LEFT_CONTROL + "a" + Keys.BACK_SPACE);
         $("span[data-test-id='phone'] input").setValue(phoneNumber);
         $$("button").find(exactText("Запланировать")).click();
-        $(withText("Необходимо подтверждение")).shouldBe(visible, Duration.ofSeconds(1));
+        $(withText("Необходимо подтверждение")).shouldBe(visible, Duration.ofSeconds(3));
         $("div.notification_status_error").shouldBe(Text.text("У вас уже запланирована встреча на другую дату. Перепланировать?")).shouldBe(visible);
         $$("button").find(exactText("Перепланировать")).click();
-
+        $(withText("Успешно!")).shouldBe(visible, Duration.ofSeconds(15));
+        $("div.notification__content").shouldBe(Text.text("Встреча успешно запланирована на " + newDate)).shouldBe(visible);
     }
 
 }

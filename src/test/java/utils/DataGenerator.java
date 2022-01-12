@@ -3,6 +3,8 @@ package utils;
 import com.github.javafaker.Faker;
 import entities.UserInfo;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 import java.util.Random;
 
@@ -29,6 +31,10 @@ public class DataGenerator {
                     faker.name().fullName(),
                     faker.phoneNumber().phoneNumber()
             );
+        }
+
+        public static String setDate(int daysCount) {
+            return LocalDate.now().plusDays(daysCount).format(DateTimeFormatter.ofPattern("dd.MM.uuuu"));
         }
     }
 }
