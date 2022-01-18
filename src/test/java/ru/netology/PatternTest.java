@@ -3,7 +3,6 @@ package ru.netology;
 import com.codeborne.selenide.conditions.Text;
 import com.github.javafaker.Faker;
 import entities.UserInfo;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
@@ -11,9 +10,6 @@ import org.openqa.selenium.Keys;
 import utils.DataGenerator;
 
 import java.time.Duration;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Locale;
 
 import static com.codeborne.selenide.Condition.exactText;
 import static com.codeborne.selenide.Condition.visible;
@@ -37,11 +33,11 @@ public class PatternTest {
         String phoneNumber = userInfo.getPhoneNumber();
 
         // выбираем город
-        $(By.xpath("//*[contains(@placeholder, 'Город')]")).setValue(city);
+        $(By.xpath("//input[contains(@placeholder, 'Город')]")).setValue(city);
         // Дата - не ранее трёх дней с текущей даты
         String date = DataGenerator.Registration.setDate(3);
-        $(By.xpath("//*[contains(@placeholder, 'Дата встречи')]")).doubleClick().sendKeys(Keys.BACK_SPACE);
-        $(By.xpath("//*[contains(@placeholder, 'Дата встречи')]")).setValue(date);
+        $(By.xpath("//input[contains(@placeholder, 'Дата встречи')]")).doubleClick().sendKeys(Keys.BACK_SPACE);
+        $(By.xpath("//input[contains(@placeholder, 'Дата встречи')]")).setValue(date);
         // Поле Фамилия и имя - разрешены только русские буквы, дефисы и пробелы
         $("span[data-test-id='name'] input").setValue(fullName);
         // Поле телефон - только цифры (11 цифр), символ + (на первом месте)
@@ -54,11 +50,11 @@ public class PatternTest {
         $(By.xpath("//div[contains(@class, 'notification_status_ok')]//button[contains(@class, 'notification__closer')]")).click();
 
 
-        $(By.xpath("//*[contains(@placeholder, 'Город')]")).sendKeys(Keys.LEFT_CONTROL + "a" + Keys.BACK_SPACE);
-        $(By.xpath("//*[contains(@placeholder, 'Город')]")).setValue(city);
+        $(By.xpath("//input[contains(@placeholder, 'Город')]")).sendKeys(Keys.LEFT_CONTROL + "a" + Keys.BACK_SPACE);
+        $(By.xpath("//input[contains(@placeholder, 'Город')]")).setValue(city);
         String newDate = DataGenerator.Registration.setDate(4);
-        $(By.xpath("//*[contains(@placeholder, 'Дата встречи')]")).doubleClick().sendKeys(Keys.BACK_SPACE);
-        $(By.xpath("//*[contains(@placeholder, 'Дата встречи')]")).setValue(newDate);
+        $(By.xpath("//input[contains(@placeholder, 'Дата встречи')]")).doubleClick().sendKeys(Keys.BACK_SPACE);
+        $(By.xpath("//input[contains(@placeholder, 'Дата встречи')]")).setValue(newDate);
         $("span[data-test-id='phone'] input").sendKeys(Keys.LEFT_CONTROL + "a" + Keys.BACK_SPACE);
         $("span[data-test-id='phone'] input").setValue(phoneNumber);
         $$("button").find(exactText("Запланировать")).click();
